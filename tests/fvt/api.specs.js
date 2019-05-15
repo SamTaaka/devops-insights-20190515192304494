@@ -51,6 +51,7 @@
             }
         });
     	});
+    	
 
       it('with another valid zip code', function(done) {
         if(!appUrl) {
