@@ -1,4 +1,3 @@
-
 var ConsoleModule = angular.module('ConsoleModule', ['ngRoute']);
 
 ConsoleModule.config(['$routeProvider', '$locationProvider','$sceDelegateProvider', '$httpProvider',
@@ -29,8 +28,9 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
         } else if(which === 4) {
             data = $scope.zip4m;
         } 
+        
+        
 
-		//just saying if there is any data at all
         if(data.length > 0) {
             $http({
                 method: "GET",
@@ -66,5 +66,4 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
                 } 
         }
     };
-    
 }]);
