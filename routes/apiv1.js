@@ -8,13 +8,19 @@ var request = REQUEST.defaults( {
 
 
 var OPENWEATHERURL = "http://api.openweathermap.org/data/2.5/weather?appid=6b7b471967dd0851d0010cdecf28f829&units=metric";
+var aurl;
 
 exports.getWeather = function(req, res) {
 	var city = req.query.zip;
-	var aurl;
 	if( (city === null) || (typeof(city) === 'undefined') ) {
-		return res.status(400).send('zip missing');
-	} else {
+		var latNew = req.query.lat;
+		var lngNew = req.query.lng;
+		if (((latNew === null) || (lngNew === null)) || ((typeof(newLat) === 'undefined') || (typeof(newLng) === 'undefined'))){
+		    return res.status(400).send('zip missing');	
+		} //end if
+		aurl = OPENWEATHERURL + '&lat=' + latNew + '&lon=' + newLng;
+	} //end if
+	   else {
 	    aurl = OPENWEATHERURL + '&q=' + city + ',nz';
 	} //apparently and if/else can help? not sure though
 
@@ -30,7 +36,7 @@ exports.getWeather = function(req, res) {
     		if(body.cod === 200) {
     			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
 
-    			var response = {city: body.name, weather: weath};
+    			var response = {city: body.name, weather: weath, lat: body.coord.lat, lon: body.coord.lon};
     			return res.status(200).send(response);
     		} else {
                 return res.status(400).send({msg:'Failed'});
@@ -41,7 +47,7 @@ exports.getWeather = function(req, res) {
 };
 router.get('/getWeather', exports.getWeather);
 
-
+/*
 exports.getWeatherByCoords = function(req, res) {
 	var bothCoords = req.query.lat;
 	if( (bothCoords === null) || (typeof(bothCoords) === 'undefined') ) {
@@ -70,6 +76,6 @@ exports.getWeatherByCoords = function(req, res) {
     });
 };
 router.get('/getWeatherCoords', exports.getWeatherByCoords);
-
+*/
 
 exports.router = router;
