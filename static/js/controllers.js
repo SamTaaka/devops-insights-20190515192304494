@@ -34,7 +34,7 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
 		var lat = event.bothCoords.lat();
 		var lon = event.bothCoords.lon();
 		var coords = lat + '&lon=' + lon;
-	})
+	});
 	
 	$http({
                 method: "GET",
@@ -47,7 +47,7 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
     });
     
     mapInfo.open(map, mark);
-    $scope.zip = function(which);
+    $scope.zip = function(which) {
 	
 
         var data = "";
