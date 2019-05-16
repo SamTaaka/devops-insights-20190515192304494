@@ -25,7 +25,7 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
 	
 	var map = new google.maps.Map(document.getElementById('googleMap'), {
 		zoom: 6,
-		center: {lat: -37.788, lon: 175.318 }
+		center: {lat: -37.7870, lon: 175.2793 }
 	});
 	
 	google.maps.event.addListener(map, 'click', function(event){

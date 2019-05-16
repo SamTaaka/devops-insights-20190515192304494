@@ -97,7 +97,7 @@
         main: {
           temp: 18
         },
-        coord: {la: -37.788, lo: 175.318}
+        coord: {la: -37.7870, lo: 175.2793}
       };
 
       var request = function( obj, callback ){
@@ -130,8 +130,8 @@
   	it('with valid cords and error from request call', function(){
   		reqMock = {
   			query: {
-  				lat: -37.788, 
-  				lon: 175.318
+  				lat: -37.7870, 
+  				lon: 175.2793
   			}
   		};
   		var request = function(obj, callback){
@@ -146,8 +146,8 @@
   	it('with incomplete coords', function(){
   		reqMock = {
   			query: {
-  				lat: -37.788, 
-  				lon: 175.318
+  				lat: -37.7870, 
+  				lon: 175.2793
   			}
   		};
   		var request = function(obj, callback){
@@ -162,8 +162,8 @@
   	it('with valid coords', function(){
   		reqMock = {
   			query: {
-  				lat: -37.788,
-  				lon: 175.318
+  				lat: -37.7870, 
+  				lon: 175.2793
   			}
   		};
   		
