@@ -28,8 +28,6 @@ exports.getWeather = function(req, res) {
     	} else {
     		if(body.cod === 200) {
     			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
-    			var lon = body.coord.lon;
-    			var lat = body.coord.lat;
     			var response = {city: body.name, weather: weath, long: body.coord.lon, lati: body.coord.lat};
     			return res.status(200).send(response);
     		} else {
@@ -59,8 +57,6 @@ exports.getWeather2 = function(req, res) {
     	} else {
     		if(body.cod === 200) {
     			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
-    			var lon = body.coord.lon;
-    			var lat = body.coord.lat;
     			var response = {city: body.name, weather: weath, long: body.coord.lon, lati: body.coord.lat};
     			return res.status(200).send(response);
     		} else {
