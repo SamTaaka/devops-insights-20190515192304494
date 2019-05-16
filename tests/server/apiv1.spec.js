@@ -113,7 +113,7 @@
     });
   });
   
-  
+  /*try without these
   //need to make a test for the latitude and longitude
   describe('Get Weather By Coords', function(){
   	it('without coords', function(){
@@ -255,4 +255,5 @@
       assert(resMock.send.lastCall.args[0].weather === 'Conditions are cold and temperature is 78 C', 'Unexpected response:' + resMock.send.lastCall.args[0].weather);
     });
   });*/
+ 
 }());
