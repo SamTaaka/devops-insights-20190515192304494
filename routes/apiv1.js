@@ -44,7 +44,7 @@ router.get('/getWeather', exports.getWeather);
 
 exports.getWeatherCoords = function(req, res) {
 	var bothCoords = req.query.lat;
-	if( (bothCoords === null) || (typeof(city) === 'undefined') ) {
+	if( (bothCoords === null) || (typeof(bothCoords) === 'undefined') ) {
 		return res.status(400).send('coordinates are missing');
 	}
 	var aurl = OPENWEATHERURL + '&lat=' + req.query.lat + '&lon=' + req.query.lon;
