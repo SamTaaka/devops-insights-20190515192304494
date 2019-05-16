@@ -18,7 +18,7 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
     $scope.zip1Weather = "";
 
 	var arrayMark = [0,0,0,0];
-	var index;
+	var index = 1;
 	
 	/*Don't actually need
 	var mapInfo = new google.maps.InfoWindow({
@@ -47,7 +47,7 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
 	
 	function marker(i, latitude, longitude){
 		console.log("The index is currently: " + index);
-		console.log("Latitude: " + latiude + typeof latitude + ", Longitude: " + longitude + typeof longitude);
+		console.log("Latitude: " + latitude + typeof latitude + ", Longitude: " + longitude + typeof longitude);
 		var myCoords = new google.mapsLatLng(latitude, longitude);
 		var mark = new google.maps.Marker({
 			position: myCoords,
