@@ -180,7 +180,7 @@
   			}
   		};
   		var request = function(obj, callback){
-  			callback("error", null, null);
+  			callback(null, null, body);
   		};
   		apiv1.__set__("request", request);
   		apiv1.getWeatherByCoords(reqMock, resMock);
