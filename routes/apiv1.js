@@ -15,10 +15,10 @@ exports.getWeather = function(req, res) {
 	if( (city === null) || (typeof(city) === 'undefined') ) {
 		var latNew = req.query.lat;
 		var lngNew = req.query.lng;
-		if (((latNew === null) || (lngNew === null)) || ((typeof(newLat) === 'undefined') || (typeof(newLng) === 'undefined'))){
+		if (((latNew === null) || (lngNew === null)) || ((typeof(latNew) === 'undefined') || (typeof(lngNew) === 'undefined'))){
 		    return res.status(400).send('zip missing');	
 		} //end if
-		aurl = OPENWEATHERURL + '&lat=' + latNew + '&lon=' + newLng;
+		aurl = OPENWEATHERURL + '&lat=' + latNew + '&lon=' + lngNew;
 	} //end if
 	   else {
 	    aurl = OPENWEATHERURL + '&q=' + city + ',nz';
