@@ -1,5 +1,21 @@
 /* CSS declarations go here */
 
+#mapSizing{
+	position: relative;
+	width: 500px;
+	height: 500px;
+	margin-right: 50px;
+	float: right;
+}
+
+
+#containerMap{
+	width: 500px;
+	height: 500px;
+	margin-right: 50;
+	float: right;
+}
+
 body {
     margin: 0px;
 }
