@@ -186,7 +186,7 @@
   		apiv1.getWeatherByCoords(reqMock, resMock);
   		assert(resMock.status.lastCall.calledWith(400), 'Unexpected response: ' + resMock.status.lastCall.args);
   		assert(resMock.send.lastCall.args[0].city === 'Hamilton', 'Unexpected response:' + resMock.send.lastCall.args[0].city);
-  		assert(resMock.send.lastCall.args[0].weather === 'The location\'s conditions are cold and the temperature is 18 C', + resMock.sendlastCall.args[0].weather);
+  		assert(resMock.send.lastCall.args[0].weather === 'The locations conditions are cold and the temperature is 18 C', + resMock.sendlastCall.args[0].weather);
   	});
   });
   
