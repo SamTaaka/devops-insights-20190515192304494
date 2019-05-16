@@ -14,6 +14,7 @@
     <body>
         <div float="left">
             <% include includes/mainbody %>
+            <div id="map" style="width: 100%; height: 350px;"></div>
         </div>
     </body>
 
@@ -22,5 +23,29 @@
             angular.bootstrap(document, ['ConsoleModule']);
         });
     </script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH-drF251SCncbPNeO40D43FcFPdc9Wtu&callback=initMap"
+    async defer></script>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

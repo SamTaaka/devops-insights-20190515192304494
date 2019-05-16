@@ -11,11 +11,12 @@ var OPENWEATHERURL = "http://api.openweathermap.org/data/2.5/weather?appid=6b7b4
 
 exports.getWeather = function(req, res) {
 	var city = req.query.zip;
+	var aurl;
 	if( (city === null) || (typeof(city) === 'undefined') ) {
 		return res.status(400).send('zip missing');
-	}
-
-	var aurl = OPENWEATHERURL + '&q=' + city + ',nz';
+	} else {
+	    aurl = OPENWEATHERURL + '&q=' + city + ',nz';
+	} //apparently and if/else can help? not sure though
 
 	request({
 		method: 'GET',
