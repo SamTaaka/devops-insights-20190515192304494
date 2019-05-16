@@ -34,7 +34,6 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
 		var lat = event.bothCoords.lat();
 		var lon = event.bothCoords.lon();
 		var coords = lat + '&lon=' + lon;
-	});
 	
 	$http({
                 method: "GET",
