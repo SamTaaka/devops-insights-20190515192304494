@@ -74,6 +74,7 @@
     	});
     });
     
+    /*try without
      //fvt test for using latlng
     describe('Get weather by coords', function(){
     	var lat = -37.7870;
@@ -140,7 +141,7 @@
     });
 
     
-    
+    */
     
     
     
