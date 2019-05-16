@@ -13,12 +13,12 @@ var aurl;
 exports.getWeather = function(req, res) {
 	var city = req.query.zip;
 	if( (city === null) || (typeof(city) === 'undefined') ) {
-		var latNew = req.query.lat;
-		var lngNew = req.query.lng;
-		if (((latNew === null) || (lngNew === null)) || ((typeof(latNew) === 'undefined') || (typeof(lngNew) === 'undefined'))){
+		var latitude = req.query.lat;
+		var longitude = req.query.lng;
+		if (((latitude === null) || (longitude === null)) || ((typeof(latitude) === 'undefined') || (typeof(longitude) === 'undefined'))){
 		    return res.status(400).send('zip missing');	
 		} //end if
-		aurl = OPENWEATHERURL + '&lat=' + latNew + '&lon=' + lngNew;
+		aurl = OPENWEATHERURL + '&lat=' + latitude + '&lon=' + longitude;
 	} //end if
 	   else {
 	    aurl = OPENWEATHERURL + '&q=' + city + ',nz';

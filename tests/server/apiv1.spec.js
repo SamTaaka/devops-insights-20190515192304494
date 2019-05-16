@@ -96,7 +96,7 @@
         main: {
           temp: 18
         },
-        coord: {la: -37.7870, lo: 175.2793}
+        coord: {lat: -37.7870, lon: 175.2793}
       };
 
       var request = function( obj, callback ){
