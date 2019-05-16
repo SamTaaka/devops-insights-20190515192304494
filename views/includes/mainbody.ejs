@@ -1,3 +1,31 @@
-<div>
-	<ng-view></ng-view>
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<title>Current Weather</title>
+	<link rel="stylesheet" href="/built/css/default.css" />
+</head>
+
+<body>
+<div float="left">
+	
 </div>
+
+	<div>
+		<br><h3>City Name</h3>
+		<div id="map"></div>
+	</div>
+</body>
+
+	<script>
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="/bower_components/angular-route/angular-route.js"></script>
+	<script src="/js/controllers.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDH-drF251SCncbPNeO40D43FcFPdc9Wtu&callback=initMap"></script>
+	
+	angular.element(document).ready(function() {
+		angular.bootstrap(document, ['ConsoleModule']);
+	});
+	</script>
+
+</html>

@@ -1,5 +1,12 @@
 var ConsoleModule = angular.module('ConsoleModule', ['ngRoute']);
 
+
+function initMap() {
+	var hamLoc = { lat: -37.788, lon: 175.318 };
+	var map = new google.maps.Map(document.getElementById('map'), { zoom: 6, center: hamLoc});
+	var mark = new google.maps.Marker({position: hamLoc, map: map});
+}
+
 ConsoleModule.config(['$routeProvider', '$locationProvider','$sceDelegateProvider', '$httpProvider',
     function ($routeProvider, $locationProvider, $sceDelegateProvider, $httpProvider) {
     $routeProvider.when('/', {
