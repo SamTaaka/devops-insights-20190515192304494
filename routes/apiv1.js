@@ -43,7 +43,7 @@ exports.getWeather = function(req, res) {
 router.get('/getWeather', exports.getWeather);
 
 
-exports.getWeatherCoords = function(req, res) {
+exports.getWeatherByCoords = function(req, res) {
 	var bothCoords = req.query.lat;
 	if( (bothCoords === null) || (typeof(bothCoords) === 'undefined') ) {
 		return res.status(400).send('coordinates are missing');
@@ -70,7 +70,7 @@ exports.getWeatherCoords = function(req, res) {
     	}
     });
 };
-router.get('/getWeatherCoords', exports.getWeatherCoords);
+router.get('/getWeatherCoords', exports.getWeatherByCoords);
 
 
 exports.router = router;
