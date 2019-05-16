@@ -28,7 +28,9 @@ exports.getWeather = function(req, res) {
     	} else {
     		if(body.cod === 200) {
     			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
-    			var response = {city: body.name, weather: weath, long: body.coord.lon, lati: body.coord.lat};
+    			var lat = body.coord.lat;
+    			var lon = body.coord.lon;
+    			var response = {city: body.name, weather: weath, lati: body.coord.lat, long: body.coord.lon};
     			return res.status(200).send(response);
     		} else {
                 return res.status(400).send({msg:'Failed'});
@@ -40,12 +42,14 @@ exports.getWeather = function(req, res) {
 router.get('/getWeather', exports.getWeather);
 
 
-exports.getWeather2 = function(req, res) {
-	var city = req.query.city;
-	if( (city === null) || (typeof(city) === 'undefined') ) {
-		return res.status(400).send('city missing');
+exports.getWeatherCoords = function(req, res) {
+	var bothCoords = req.query.lat;
+	if( (bothCoords === null) || (typeof(city) === 'undefined') ) {
+		return res.status(400).send('coordinates are missing');
 	}
-	var aurl = OPENWEATHERURL + '&q=' + city + ',nz';
+	var aurl = OPENWEATHERURL + '&lat=' + req.query.lat + '&lon=' + req.query.lon;
+	
+	
 	request({
 		method: 'GET',
         url: aurl,
@@ -56,8 +60,8 @@ exports.getWeather2 = function(req, res) {
     		//console.error("Failed to send request to openweathermap.org", err);
     	} else {
     		if(body.cod === 200) {
-    			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
-    			var response = {city: body.name, weather: weath, long: body.coord.lon, lati: body.coord.lat};
+    			var weath = "The coordinates are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
+    			var response = {city: body.name, weather: weath};
     			return res.status(200).send(response);
     		} else {
                 return res.status(400).send({msg:'Failed'});
@@ -65,7 +69,7 @@ exports.getWeather2 = function(req, res) {
     	}
     });
 };
-router.get('/getWeather2', exports.getWeather2);
+router.get('/getWeatherCoords', exports.getWeatherCoords);
 
 
 exports.router = router;

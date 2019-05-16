@@ -97,6 +97,7 @@
         main: {
           temp: 18
         }
+        coord: {la: -37.788, lo: 175.318}
       };
 
       var request = function( obj, callback ){
@@ -112,6 +113,19 @@
       assert(resMock.send.lastCall.args[0].weather === 'Conditions are cold and temperature is 18 C', 'Unexpected response:' + resMock.send.lastCall.args[0].weather);
     });
   });
+  
+  
+  //need to make a test for the latitude and longitude
+  describe('Get Weather By Coords', function(){
+  	it('without coords', function(){
+  		reqMock = {
+  			query: {
+  				
+  			}
+  		};
+  		apiv1.getWeatherByBothCoords
+  	})
+  })
   
 /*
   describe('Get Weather 2', function() {
