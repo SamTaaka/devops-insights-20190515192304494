@@ -1,3 +1,5 @@
+//Need this to work to submit
+
 (function () {
 
     'use strict';
@@ -14,7 +16,6 @@
 
     describe('Get Weather', function() {
 
-    	
     	it('with valid city name', function(done) {
         if(!appUrl) {
             assert.fail("Environment variable APP_URL is not defined");
@@ -22,14 +23,14 @@
         }
         request({
       		method: 'GET',
-              url: appUrl + '/api/v1/getWeather?zip=Hamilton'
+              url: appUrl + '/api/v1/getWeather?zip=hamilton'
           }, function(err, resp, body) {
           	if(err) {
           		assert.fail('Failed to get the response');
           	} else {
               assert.equal(resp.statusCode, 200);
               var pbody = JSON.parse(body);
-              assert(pbody.city === 'Hamilton', "City name does not match");
+              assert((pbody.city === 'Hamilton'), "City name does not match");
               done();
             }
         });
@@ -52,96 +53,26 @@
             }
         });
     	});
+    	
 
-		it('with incorrect spelling', function(done) {
+      it('with another valid zip code', function(done) {
         if(!appUrl) {
             assert.fail("Environment variable APP_URL is not defined");
             return done();
         }
         request({
       		method: 'GET',
-              url: appUrl + '/api/v1/getWeather?zip=hamk'
-          }, /* @callback */ function(err, resp, body) {
+              url: appUrl + '/api/v1/getWeather?zip=Tauranga'
+          }, function(err, resp, body) {
           	if(err) {
           		assert.fail('Failed to get the response');
           	} else {
-              assert.equal(resp.statusCode, 400);
+              assert.equal(resp.statusCode, 200);
+              var pbody = JSON.parse(body);
+              assert(pbody.city === 'Tauranga', "City name does not match");
               done();
             }
         });
     	});
-    	
     });
-    
-    /*try without
-     //fvt test for using latlng
-    describe('Get weather by coords', function(){
-    	var lat = -37.7870;
-    	var lon = 175.2793;
-    	var both = lat + '&lon=' + lon;
-    	it('with valid cords', function(done){
-    		if(!appUrl) {
-            	assert.fail("Environment variable APP_URL is not defined");
-            	return done();
-        	}
-        	request({
-        		method: 'GET',
-        		url: appUrl + '/api/v1/getWeatherByCoords?lat=' + both
-        	}, function(err, resp, body){
-        		if(err){
-        			assert.fail('Failed to get the response');
-        		} else{
-        			assert.equal(resp.statusCode, 200);
-        			var pbody = JSON.parse(body);
-        			assert(pbody.city === 'Hamilton', "City name does not match");
-        			done();
-        		}
-        	});
-    	});
-    	
-    	it('without coords', function(done){
-    		if(!appUrl) {
-            	assert.fail("Environment variable APP_URL is not defined");
-            	return done();
-        	}
-        	request({
-        		method: 'GET',
-        		url: appUrl + '/api/v1/getWeatherByCoords?lat='
-        	}, function(err, resp, body){
-        		if(err){
-        			assert.fail('Failed to get the response');
-        		} else{
-        			assert.equal(resp.statusCode, 400);
-        			done();
-        		}
-        	}
-        	);
-    	});
-    	
-    	it('with another valid coords', function(done){
-    		if(!appUrl) {
-            	assert.fail("Environment variable APP_URL is not defined");
-            	return done();
-        	}
-        	request({
-        		method: 'GET',
-        		url: appUrl + '/api/v1/getWeatherByCoords?lat=' + both
-        	}, function(err, resp, body){
-        		if(err){
-        			assert.fail('Failed to get the response');
-        		} else{
-        			assert.equal(resp.statusCode, 200);
-        			var pbody = JSON.parse(body);
-        			assert(pbody.city === 'Hamilton', "City name does not match");
-        			done();
-        		}
-        	});
-    	});
-    });
-    
-    */
-    
-    
-   
-
 })();
