@@ -6,23 +6,15 @@ var request = REQUEST.defaults( {
     strictSSL: false
 });
 
-
 var OPENWEATHERURL = "http://api.openweathermap.org/data/2.5/weather?appid=6b7b471967dd0851d0010cdecf28f829&units=metric";
-var aurl;
 
 exports.getWeather = function(req, res) {
-	var city = req.query.zip;
-	if( (city === null) || (typeof(city) === 'undefined') ) {
-		var latitude = req.query.lat;
-		var longitude = req.query.lng;
-		if (((latitude === null) || (longitude === null)) || ((typeof(latitude) === 'undefined') || (typeof(longitude) === 'undefined'))){
-		    return res.status(400).send('zip missing');	
-		} //end if
-		aurl = OPENWEATHERURL + '&lat=' + latitude + '&lon=' + longitude;
-	} //end if
-	   else {
-	    aurl = OPENWEATHERURL + '&q=' + city + ',nz';
-	} //apparently and if/else can help? not sure though
+	var zip = req.query.zip;
+	if( (zip === null) || (typeof(zip) === 'undefined') ) {
+		return res.status(400).send('zip missing');
+	}
+
+	var aurl = OPENWEATHERURL + '&q=' + zip + ',nz';
 
 	request({
 		method: 'GET',
@@ -35,8 +27,7 @@ exports.getWeather = function(req, res) {
     	} else {
     		if(body.cod === 200) {
     			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
-
-    			var response = {city: body.name, weather: weath, lat: body.coord.lat, lon: body.coord.lon};
+    			var response = {city: body.name, weather: weath, coord: body.coord};
     			return res.status(200).send(response);
     		} else {
                 return res.status(400).send({msg:'Failed'});
@@ -46,6 +37,7 @@ exports.getWeather = function(req, res) {
 
 };
 router.get('/getWeather', exports.getWeather);
+
 
 /*
 exports.getWeatherByCoords = function(req, res) {
@@ -77,5 +69,6 @@ exports.getWeatherByCoords = function(req, res) {
 };
 router.get('/getWeatherCoords', exports.getWeatherByCoords);
 */
+
 
 exports.router = router;
