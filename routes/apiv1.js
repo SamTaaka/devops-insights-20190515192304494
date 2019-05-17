@@ -41,13 +41,13 @@ router.get('/getWeather', exports.getWeather);
 
 
 exports.getWeather2 = function(req, res) {
-	var bothCoords = req.query.lat;
-	if( (bothCoords === null) || (typeof(bothCoords) === 'undefined') ) {
-		return res.status(400).send('coordinates are missing');
+	var zip = req.query.zip;
+	if( (zip === null) || (typeof(zip) === 'undefined') ) {
+		return res.status(400).send('zip missing');
 	}
-	var aurl = OPENWEATHERURL + '&lat=' + req.query.lat + '&lon=' + req.query.lon;
-	
-	
+
+	var aurl = OPENWEATHERURL + '&zip=' + zip + ',us';
+
 	request({
 		method: 'GET',
         url: aurl,
@@ -58,7 +58,7 @@ exports.getWeather2 = function(req, res) {
     		//console.error("Failed to send request to openweathermap.org", err);
     	} else {
     		if(body.cod === 200) {
-    			var weath = "The coordinates are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
+    			var weath = "Conditions are " + body.weather[0].main + " and temperature is " + body.main.temp + ' C';
     			var response = {city: body.name, weather: weath};
     			return res.status(200).send(response);
     		} else {
@@ -66,9 +66,9 @@ exports.getWeather2 = function(req, res) {
             }
     	}
     });
+
 };
 router.get('/getWeather2', exports.getWeather2);
-
 
 
 exports.router = router;
