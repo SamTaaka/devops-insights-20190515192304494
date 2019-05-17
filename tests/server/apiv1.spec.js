@@ -1,5 +1,3 @@
-//Need this to work to submit
-
 (function () {
 
   'use strict';
