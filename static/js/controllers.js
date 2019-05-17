@@ -1,6 +1,5 @@
 var ConsoleModule = angular.module('ConsoleModule', ['ngRoute']);
 
-
 ConsoleModule.config(['$routeProvider', '$locationProvider','$sceDelegateProvider', '$httpProvider',
     function ($routeProvider, $locationProvider, $sceDelegateProvider, $httpProvider) {
     $routeProvider.when('/', {
@@ -10,17 +9,11 @@ ConsoleModule.config(['$routeProvider', '$locationProvider','$sceDelegateProvide
     });
 }]);
 
-ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$timeout', '$sce',
-    function($scope, $http, $routeParams, $timeout, $sce) {
+var arrayMarks = [];
+var map;
 
-    $scope.somemessage = "Some weather";
-    $scope.zip1City = "";
-    $scope.zip1Weather = "";
 
-	var arrayMark = [0,0,0,0];
-	var index = 1;
-	
-	/*Don't actually need
+/*Don't actually need
 	var mapInfo = new google.maps.InfoWindow({
 		content: "Hi"
 	});
@@ -33,84 +26,41 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
 	});
 	*/ 
 	
-		function startMap(){
-		$scope.map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 6,
-		center: { lat: -37.7870, lng: 175.2793 }
-	});
-	
-	    $scope.map.addListener('click', function(e){
-		marker(index, e.latLng.lat(), e.latLng.lng());
-		weatherMark(e.latLng.lat(), e.latLng.lng());
-	 });
-    } //end function to set up the map
-	
-	function marker(i, latitude, longitude){
-		console.log("The index is currently: " + index);
-		console.log("Latitude: " + latitude + typeof latitude + ", Longitude: " + longitude + typeof longitude);
-		var myCoords = new google.mapsLatLng(latitude, longitude);
-		var mark = new google.maps.Marker({
-			position: myCoords,
-			map: $scope.map,
-			title: i.toString()
-		});
-		
-		//trying to see if this method can check if an index is already in the array
-		if(arrayMark[i-1] !== 0){
-			arrayMark[i-1].setMap(null);
-		} //end if statement
-		
-		$scope.map.panTo(myCoords);
-		index = i;
-		console.log("New index is now: " + index);
-		arrayMark[i-1] = mark;
-	} //end marker function
-	
-	    function weatherMark(latitude, longitude){
-    	
-    	if(latitude !== undefined && longitude !== undefined){
-    		$http({
-    			method: "GET",
-    			url: '/api/v1/getWeatherByCoords?lat=' + latitude + '&lng=' + longitude
-    		}).then(function(response) {
-    			if(index === 1){
-    				$scope.zip1City = response.data.city;
-    				$scope.zip1Weather = response.data.weather;
-    			} else if(index === 2){
-    	            $scope.zip2City = response.data.city;
-    				$scope.zip2Weather = response.data.weather;
-    			}
-    			 else if(index === 3){
-    	            $scope.zip3City = response.data.city;
-    				$scope.zip3Weather = response.data.weather;
-    			}
-    			 else if(index === 4){
-    	            $scope.zip4City = response.data.city;
-    				$scope.zip4Weather = response.data.weather;
-    			} //end last else if
-    		}); //end section of if statements	
-    	} //end if statement
-    	else{
-    		if(index === 1){
-    			$scope.zip1City = "";
-    			$scope.zip1Weather = "";
-    			$scope.zip1lat = "";
-    			$scope.zip1lon = "";
-    		} else if(index === 2){
-    			$scope.zip2City = "";
-    			$scope.zip2Weather = "";
-    		} else if(index === 3){
-    			$scope.zip3City = "";
-    			$scope.zip3Weather = "";
-    		} else if(index === 4){
-    			$scope.zip4City = "";
-    			$scope.zip4Weather = "";
-    		} //end last else if
-    	} //end else
-    } //end function
-    
-    
 
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -37.7870, lng: 175.2793 },
+          zoom: 8
+        });
+        
+        	map.addListener('click', function(e) {
+        		var index;
+		    	for(index = 1; index < arrayMarks.length; index++){	//find next available array position
+		    		if(arrayMarks[index] === null)
+		    			break;
+	    		}
+
+		    	var coord = {lat: e.latLng.lat, lon: e.latLng.lng};
+		    	addMarker(coord, index);
+			});
+      }
+
+	function addMarker(latLng, placement){
+		var marker = new google.maps.Marker({
+          position: {lat: latLng.lat, lng: latLng.lon},
+          map: map,
+          title: placement.toString()
+        });
+        
+        arrayMarks[placement] = marker;
+	}
+	
+	function deleteMarker(placement){
+		arrayMarks[placement].setMap(null);
+		arrayMarks[placement] = null;
+	}
+	
 	
 	/*
 	google.maps.event.addListener(map, 'click', function(event){
@@ -131,12 +81,15 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
     });
     */
    
-   startMap();
-   
-    
-    //mapInfo.open(map, mark);
+
+ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$timeout', '$sce',
+    function($scope, $http, $routeParams, $timeout, $sce) {
+
+    $scope.somemessage = "Some weather";
+    $scope.zip1City = "";
+    $scope.zip1Weather = "";
+
     $scope.zip = function(which) {
-	
 
         var data = "";
         if(which === 1) {
@@ -148,53 +101,50 @@ ConsoleModule.controller('wcontroller', ['$scope', '$http', '$routeParams', '$ti
         } else if(which === 4) {
             data = $scope.zip4m;
         } 
-        
-        
 
-        if(data.length > 0) {
+        if(data.length > 1) {
             $http({
                 method: "GET",
                 url: '/api/v1/getWeather?zip=' + data
             }).then( function(response) {
-            	var latLong = nul;
+            	var coords = response.data.coord;
                 if(which === 1) {
-                    $scope.zip1City = response.data.city;
                     $scope.zip1Weather = response.data.weather;
-                    $scope.zip1lat = response.data.lat;
-                    $scope.zip1lon = response.data.lon;
-                    marker(1, response.data.lat, response.data.lon);
+                    $scope.zip1City = response.data.coord.lat + ',' + response.data.coord.lon; 
+                    addMarker(response.data.coord, which);
                 } else if(which === 2) {
-                    $scope.zip2City = response.data.city;
+                    $scope.zip2City = response.data.coord.lat + ',' + response.data.coord.lon;
                     $scope.zip2Weather = response.data.weather;
-                    marker(2, response.data.lat, response.data.lon);
+                    addMarker(response.data.coord, which);
                 } else if(which === 3) {
-                    $scope.zip3City = response.data.city;
+                    $scope.zip3City = response.data.coord.lat + ',' + response.data.coord.lon;
                     $scope.zip3Weather = response.data.weather;
-                    marker(3, response.data.lat, response.data.lon);
+                    addMarker(response.data.coord, which);
                 } else if(which === 4) {
-                    $scope.zip4City = response.data.city;
+                    $scope.zip4City = response.data.coord.lat + ',' + response.data.coord.lon;
                     $scope.zip4Weather = response.data.weather;
-                    marker(4, response.data.lat, response.data.lon);
-                } //end last else if      
-            }); //end the function(response) thingy
-            
-        } else {
+                    addMarker(response.data.coord, which);
+                } 
+            });
+        }else {
             if(which === 1) {
                     $scope.zip1City = "";
                     $scope.zip1Weather = "";
-                    $scope.zip1lat = "";
-                    $scope.zip1lon = "";
+                    deleteMarker(which);
                 } else if(which === 2) {
                     $scope.zip2City = "";
                     $scope.zip2Weather = "";
+                    deleteMarker(which);
                 } else if(which === 3) {
                     $scope.zip3City = "";
                     $scope.zip3Weather = "";
+                    deleteMarker(which);
                 } else if(which === 4) {
                     $scope.zip4City = "";
                     $scope.zip4Weather = "";
-                }  //end the last else if
-        } //end else
-    }; //end function
+                    deleteMarker(which);
+                } 
+        }
+    };
     
-}]); //donezies
+}]);
