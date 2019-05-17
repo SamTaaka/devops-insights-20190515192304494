@@ -9,6 +9,7 @@ ConsoleModule.config(['$routeProvider', '$locationProvider','$sceDelegateProvide
     });
 }]);
 
+//declare variables
 var arrayMarks = [];
 var map;
 
@@ -27,7 +28,7 @@ var map;
 	*/ 
 	
 
-
+		//function intialises the map and centres it on the library at uni
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -37.7870, lng: 175.2793 },

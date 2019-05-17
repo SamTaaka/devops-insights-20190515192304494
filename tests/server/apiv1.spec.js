@@ -117,6 +117,8 @@
     });
   });
   
+  
+  //using weather two to try and fix my gate errors
   describe('Get Weather 2', function() {
 
     it('with without zip code', function() {
