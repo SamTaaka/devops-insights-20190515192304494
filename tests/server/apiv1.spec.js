@@ -43,7 +43,7 @@
     it('with valid zip code and error from request call', function() {
       reqMock = {
         query: {
-          zip: "Hamilton"
+          zip: 'Hamilton'
         }
       };
 
@@ -62,7 +62,7 @@
     it('with incomplete zip code', function() {
       reqMock = {
         query: {
-          zip: "Hamilton"
+          zip: 'Tauranga'
         }
       };
 
@@ -81,13 +81,13 @@
     it('with valid zip code', function() {
       reqMock = {
         query: {
-          zip: "Hamilton"
+          zip: 'Hamilton'
         }
       };
 
       var body = {
         cod: 200,
-        name: "Hamilton",
+        name: 'Hamilton',
         weather: [
           {
             main: 'cold'
@@ -96,7 +96,10 @@
         main: {
           temp: 18
         },
-        coord: {lat: -37.7870, lon: 175.2793}
+        coord: {
+        	lat: -37.7870, 
+            lon: 175.2793
+            }
       };
 
       var request = function( obj, callback ){
