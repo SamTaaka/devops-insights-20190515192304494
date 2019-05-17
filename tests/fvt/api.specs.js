@@ -28,7 +28,7 @@
           	} else {
               assert.equal(resp.statusCode, 200);
               var pbody = JSON.parse(body);
-              assert((pbody.city === 'Hamilton'), "City name does not match");
+              assert((pbody.city === 'Hamilton') || (pbody.city === 'hamilton'), "City name does not match");
               done();
             }
         });
@@ -67,7 +67,7 @@
           	} else {
               assert.equal(resp.statusCode, 200);
               var pbody = JSON.parse(body);
-              assert(pbody.city === 'Tauranga', "City name does not match");
+              assert(pbody.city === 'Tauranga') || (pbody.city === 'tauranga'), "City name does not match");
               done();
             }
         });
