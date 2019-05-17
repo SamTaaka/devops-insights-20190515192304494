@@ -14,6 +14,7 @@
 
     describe('Get Weather', function() {
 
+    	
     	it('with valid city name', function(done) {
         if(!appUrl) {
             assert.fail("Environment variable APP_URL is not defined");
@@ -28,7 +29,7 @@
           	} else {
               assert.equal(resp.statusCode, 200);
               var pbody = JSON.parse(body);
-              assert((pbody.city === 'Hamilton') || (pbody.city === 'hamilton'), "City name does not match");
+              assert(pbody.city === 'Hamilton', "City name does not match");
               done();
             }
         });
@@ -51,27 +52,25 @@
             }
         });
     	});
-    	
 
-      it('with another valid zip code', function(done) {
+		it('with incorrect spelling', function(done) {
         if(!appUrl) {
             assert.fail("Environment variable APP_URL is not defined");
             return done();
         }
         request({
       		method: 'GET',
-              url: appUrl + '/api/v1/getWeather?zip=Tauranga'
-          }, function(err, resp, body) {
+              url: appUrl + '/api/v1/getWeather?zip=hamk'
+          }, /* @callback */ function(err, resp, body) {
           	if(err) {
           		assert.fail('Failed to get the response');
           	} else {
-              assert.equal(resp.statusCode, 200);
-              var pbody = JSON.parse(body);
-              assert((pbody.city === 'Tauranga') || (pbody.city === 'tauranga'), "City name does not match");
+              assert.equal(resp.statusCode, 400);
               done();
             }
         });
     	});
+    	
     });
     
     /*try without
@@ -139,14 +138,10 @@
         	});
     	});
     });
-
     
     */
     
     
-    
-    
-    
-    
-    
+   
+
 })();
